@@ -12,7 +12,6 @@ def square_transform(np_arr):
 
 
 def duty_transform(period, cycles, duty_cycles):
-    print(period, cycles)
     arr = [0 if (period * duty_cycles) <= i else 1
                for i in range(period + 1)]
     return np.tile(np.array(arr), cycles)
@@ -43,8 +42,8 @@ def generate(args):
     x = np.linspace(0, c * p, c * (p + 1))
     sin_ = np.sin(2 * np.pi / p * (x - s))
 
-    plt.xlim(0, c * p)
-    plt.ylim(l -0.1, u + 0.1)
+    # plt.xlim(0, c * p)
+    # plt.ylim(l -0.1, u + 0.1)
 
     if model == 'square':
         y = square_transform(sin_)
@@ -62,15 +61,12 @@ def generate(args):
         y = duty_low_transform(sin_)
 
     else:
-        print('Unknown model {}.'.format(args.model))
-        return -1
+        raise NameError('Unknown model {}'.format(args.model))
 
     if need_to_renormalize:
         y = renormalize(y, l, u)
 
-    print(len(x), len(y))
+    # plt.plot(x, y,) # '.')
+    # plt.show()
 
-    plt.plot(x, y,) # '.')
-    plt.show()
-
-    return 0
+    return y
