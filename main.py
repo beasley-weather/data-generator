@@ -16,7 +16,11 @@ if __name__ == '__main__':
         print(ne)
         sys.exit(1)
 
-    db_write.write(data, args.database, args.attribute == 'temp',
-                   args.attribute == 'wind')
+    try:
+        db_write.write(data, args.database, args.attribute == 'temp',
+                       args.attribute == 'wind')
+    except Exception as e:
+        print(e)
+        sys.exit(2)
 
     sys.exit(0)

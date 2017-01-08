@@ -1,8 +1,13 @@
 import argparse
+from argparse import RawTextHelpFormatter
 
 
 def parse():
-    parser = argparse.ArgumentParser(description='Test data generator.')
+    parser = argparse.ArgumentParser(description='Test data generator.',
+             epilog='error codes:\n'
+                    '  1\t\t\tUnknown model argument provided\n'
+                    '  2\t\t\tDatabase IO error',
+             formatter_class=RawTextHelpFormatter)
 
     parser.add_argument('database', help='Database to write too.')
     parser.add_argument('attribute',
