@@ -8,13 +8,22 @@ import db_write
 import generator
 
 
+import user_input
+import visualize
+
+
 if __name__ == '__main__':
     args = arguments.parse()
     try:
-        data = generator.generate(args)
+        domain, data = generator.generate(args)
     except NameError as ne:
         print(ne)
         sys.exit(1)
+
+    if args.visualize:
+        visualize.display_graph(domain, data, args)
+        if not(user_input.yesno('Write data?')):
+            sys.exit(0)
 
     try:
         db_write.write(data, args.database, args.attribute == 'temp',

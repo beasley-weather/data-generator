@@ -1,4 +1,3 @@
-from matplotlib import pyplot as plt
 import numpy as np
 
 
@@ -17,16 +16,6 @@ def duty_transform(period, cycles, duty_cycles):
     return np.tile(np.array(arr), cycles)
 
 
-def duty_high_transform(np_arr):
-    new_arr = [1 if (e + 0.8) > 0 else 0 for e in np_arr]
-    return np.array(new_arr)
-
-
-def duty_low_transform(np_arr):
-    new_arr = [0 if (e + 0.8) > 0 else 1 for e in np_arr]
-    return np.array(new_arr)
-
-
 def generate(args):
     model = args.model
 
@@ -41,9 +30,6 @@ def generate(args):
 
     x = np.linspace(0, c * p, c * (p + 1))
     sin_ = np.sin(2 * np.pi / p * (x - s))
-
-    # plt.xlim(0, c * p)
-    # plt.ylim(l -0.1, u + 0.1)
 
     if model == 'square':
         y = square_transform(sin_)
@@ -66,7 +52,4 @@ def generate(args):
     if need_to_renormalize:
         y = renormalize(y, l, u)
 
-    # plt.plot(x, y,) # '.')
-    # plt.show()
-
-    return y
+    return x, y

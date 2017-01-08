@@ -27,5 +27,7 @@ def parse():
                         help='Lower limit on model.')
     parser.add_argument('-d', '--duty', type=float, default=0.5,
                         help='Duty cycle for duty model.')
+    parser.add_argument('-v', '--visualize', action='store_true',
+                        help='Display data.')
 
     return parser.parse_args()

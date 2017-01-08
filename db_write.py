@@ -2,16 +2,14 @@ import os
 import re
 import sqlite3 as sql
 
+import user_input
+
 
 ARCHIVE_SCHEMA = 'archive_schema.sql'
 
 
 def overwrite_choice(file_name):
-    choice = None
-    while choice != 'y' and choice !='n':
-        choice = input("{} exists. Overwrite? (y/n): ".format(file_name))
-
-    return True if choice == 'y' else False
+    return user_input.yesno('{} exists. Overwrite? (y/n): '.format(file_name))
 
 
 def check_exists(file_name):
