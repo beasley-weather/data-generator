@@ -15,6 +15,8 @@ def parse():
     parser.add_argument('model',
                         help='Data model (square, sin, duty_high, duty_low).')
 
+    parser.add_argument('-t', '--start-time', type=int, default=0,
+                        help='Start time (defaults to 0).')
     parser.add_argument('-c', '--cycles', type=int, default=1,
                         help='Number of cycles.')
     parser.add_argument('-p', '--period', type=int, default=24,

@@ -25,10 +25,12 @@ def generate(args):
     l = args.lower
     u = args.upper
     d = args.duty
+    t = args.start_time
+    if (t == 0): print('Warning using default start time of 0.')
 
     need_to_renormalize = l != 0 or u != 1
 
-    x = np.linspace(0, c * p, c * (p + 1))
+    x = np.linspace(t, t + c * p, c * (p + 1))
     sin_ = np.sin(2 * np.pi / p * (x - s))
 
     if model == 'square':
