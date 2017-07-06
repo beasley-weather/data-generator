@@ -33,27 +33,26 @@ def create_db(file_name):
             cur.executescript(schema_file.read())
 
 
-def write_data(data, file_name, temp=False, wind=False):
+def write_data(time, data, file_name, temp=False, wind=False):
     with sql.connect(file_name) as con:
         cur = con.cursor()
 
-        dateTime = interval = 0
-        for value in data:
+        interval = 0
+        for (x, y) in zip(time, data):
             if temp:
                 cur.execute('INSERT INTO ARCHIVE (dateTime, usUnits, interval,'
                             ' outTemp) VALUES (?, 0, ?, ?)',
-                            (dateTime, interval, value))
+                            (x, interval, y))
             elif wind:
                 cur.execute('INSERT INTO ARCHIVE (dateTime, usUnits, interval,'
                             ' windSpeed) VALUES (?, 0, ?, ?)',
-                            (dateTime, interval, value))
-
-            dateTime = interval = interval + 1
+                            (x, interval, y))
+            interval += 1
 
         con.commit()
 
 
-def write(data, file_name, temp=False, wind=False):
+def write(time, data, file_name, temp=False, wind=False):
     does_exist = check_exists(file_name)
     if does_exist:
         overwrite = overwrite_choice(file_name)
@@ -61,10 +60,10 @@ def write(data, file_name, temp=False, wind=False):
     try:
         if not(does_exist):
             create_db(file_name)
-            write_data(data, file_name, temp, wind)
+            write_data(time, data, file_name, temp, wind)
         elif overwrite:
             clear_db(file_name)
-            write_data(data, file_name, temp, wind)
+            write_data(time, data, file_name, temp, wind)
 
     except sql.Error as sqle:
         raise Exception('Database IO failure.')
